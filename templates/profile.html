@@ -1,0 +1,50 @@
+
+{% extends "base.html" %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+  <h1>User Profile</h1>
+  <p>Username: {{ username }}</p>
+  
+  <h2>Actions</h2>
+  <ul>
+    <li><a href="/users/logout">Logout</a></li>
+  </ul>
+
+  <!-- Form to Borrow a Book -->
+  <h2>Borrow a Book</h2>
+  <form method="post" action="/users/borrow">
+    <label for="borrow_book_id">Book ID:</label>
+    <input type="text" name="book_id" id="borrow_book_id" required>
+    <button type="submit">Borrow</button>
+  </form>
+
+  <!-- Form to Return a Book -->
+  <h2>Return a Book</h2>
+  <form method="post" action="/users/return">
+    <label for="return_book_id">Book ID:</label>
+    <input type="text" name="book_id" id="return_book_id" required>
+    <button type="submit">Return</button>
+  </form>
+
+  {% if notifications %}
+    <h2>Notifications</h2>
+    <ul>
+      {% for note in notifications %}
+        <li>{{ note }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  
+  {% if currently_borrowed_books %}
+    <h2>Currently Borrowed Books</h2>
+    <ul>
+      {% for book in currently_borrowed_books %}
+        <li>{{ book.title }} by {{ book.author }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  
+  <p><a href="/books/">Go to Books Page</a></p>
+{% endblock %}

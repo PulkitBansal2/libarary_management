@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Books Management{% endblock %}
+
+{% block content %}
+  <h1>Books Management</h1>
+  
+  <!-- Search Section -->
+  <h2>Search Books</h2>
+  <form method="get" action="/books/search">
+    <input type="text" name="book_id" placeholder="Enter book ID (leave blank for all)">
+    <button type="submit">Search</button>
+  </form>
+  
+  <!-- Create Section -->
+  <h2>Create New Book</h2>
+  <form method="post" action="/books/create">
+    <label for="title">Title:</label>
+    <input type="text" name="title" id="title" required>
+    
+    <label for="author">Author:</label>
+    <input type="text" name="author" id="author" required>
+    
+    <button type="submit">Create Book</button>
+  </form>
+  
+  <!-- Books List Section -->
+  <h2>Books List</h2>
+  {% if books %}
+    <table border="1" cellpadding="5" cellspacing="0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Available</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for book in books %}
+        <tr>
+          <td>{{ book.id }}</td>
+          <td>{{ book.title }}</td>
+          <td>{{ book.author }}</td>
+          <td>{{ book.available }}</td>
+          <td>
+            <a href="/books/update/{{ book.id }}">Update</a> |
+            <a href="/books/delete/{{ book.id }}">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No books found.</p>
+  {% endif %}
+  
+  <p><a href="/users/login">Go to Users Page</a></p>
+{% endblock %}
